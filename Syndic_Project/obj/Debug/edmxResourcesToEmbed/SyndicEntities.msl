@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DB_SyndicModelStoreContainer" CdmEntityContainer="DB_SyndicEntities">
+    <EntitySetMapping Name="Coproprietaires">
+      <EntityTypeMapping TypeName="DB_SyndicModel.Coproprietaire">
+        <MappingFragment StoreEntitySet="Coproprietaire">
+          <ScalarProperty Name="CinCop" ColumnName="CinCop" />
+          <ScalarProperty Name="NomCop" ColumnName="NomCop" />
+          <ScalarProperty Name="PrenomCop" ColumnName="PrenomCop" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Tel" ColumnName="Tel" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Depenses">
+      <EntityTypeMapping TypeName="DB_SyndicModel.Depense">
+        <MappingFragment StoreEntitySet="Depense">
+          <ScalarProperty Name="IdDepense" ColumnName="IdDepense" />
+          <ScalarProperty Name="NomDepense" ColumnName="NomDepense" />
+          <ScalarProperty Name="DateDepense" ColumnName="DateDepense" />
+          <ScalarProperty Name="MontantDepense" ColumnName="MontantDepense" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Logements">
+      <EntityTypeMapping TypeName="DB_SyndicModel.Logement">
+        <MappingFragment StoreEntitySet="Logement">
+          <ScalarProperty Name="NumLogement" ColumnName="NumLogement" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Paiements">
+      <EntityTypeMapping TypeName="DB_SyndicModel.Paiement">
+        <MappingFragment StoreEntitySet="Paiement">
+          <ScalarProperty Name="IdP" ColumnName="IdP" />
+          <ScalarProperty Name="NomPayeur" ColumnName="NomPayeur" />
+          <ScalarProperty Name="Datepaiement" ColumnName="Datepaiement" />
+          <ScalarProperty Name="MontatP" ColumnName="MontatP" />
+          <ScalarProperty Name="NbrMois" ColumnName="NbrMois" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Rubriques">
+      <EntityTypeMapping TypeName="DB_SyndicModel.Rubrique">
+        <MappingFragment StoreEntitySet="Rubrique">
+          <ScalarProperty Name="NomRubrique" ColumnName="NomRubrique" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="FK__Coproprie__NumLo__182C9B23" TypeName="DB_SyndicModel.FK__Coproprie__NumLo__182C9B23" StoreEntitySet="Coproprietaire">
+      <EndProperty Name="Logement">
+        <ScalarProperty Name="NumLogement" ColumnName="NumLogement" />
+      </EndProperty>
+      <EndProperty Name="Coproprietaire">
+        <ScalarProperty Name="CinCop" ColumnName="CinCop" />
+      </EndProperty>
+      <Condition IsNull="false" ColumnName="NumLogement" />
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="FK__Paiement__CinCop__1BFD2C07" TypeName="DB_SyndicModel.FK__Paiement__CinCop__1BFD2C07" StoreEntitySet="Paiement">
+      <EndProperty Name="Coproprietaire">
+        <ScalarProperty Name="CinCop" ColumnName="CinCop" />
+      </EndProperty>
+      <EndProperty Name="Paiement">
+        <ScalarProperty Name="IdP" ColumnName="IdP" />
+      </EndProperty>
+      <Condition IsNull="false" ColumnName="CinCop" />
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="FK__Depense__Rubriqu__1273C1CD" TypeName="DB_SyndicModel.FK__Depense__Rubriqu__1273C1CD" StoreEntitySet="Depense">
+      <EndProperty Name="Rubrique">
+        <ScalarProperty Name="NomRubrique" ColumnName="Rubrique" />
+      </EndProperty>
+      <EndProperty Name="Depense">
+        <ScalarProperty Name="IdDepense" ColumnName="IdDepense" />
+      </EndProperty>
+      <Condition IsNull="false" ColumnName="Rubrique" />
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="FK__Paiement__NumLog__1CF15040" TypeName="DB_SyndicModel.FK__Paiement__NumLog__1CF15040" StoreEntitySet="Paiement">
+      <EndProperty Name="Logement">
+        <ScalarProperty Name="NumLogement" ColumnName="NumLogement" />
+      </EndProperty>
+      <EndProperty Name="Paiement">
+        <ScalarProperty Name="IdP" ColumnName="IdP" />
+      </EndProperty>
+      <Condition IsNull="false" ColumnName="NumLogement" />
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

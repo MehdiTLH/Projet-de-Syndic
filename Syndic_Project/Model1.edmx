@@ -1,0 +1,365 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DB_SyndicModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Coproprietaire">
+          <Key>
+            <PropertyRef Name="CinCop" />
+          </Key>
+          <Property Name="CinCop" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NomCop" Type="varchar" MaxLength="20" />
+          <Property Name="PrenomCop" Type="varchar" MaxLength="20" />
+          <Property Name="Email" Type="varchar" MaxLength="20" />
+          <Property Name="Tel" Type="int" />
+          <Property Name="NumLogement" Type="int" />
+        </EntityType>
+        <EntityType Name="Depense">
+          <Key>
+            <PropertyRef Name="IdDepense" />
+          </Key>
+          <Property Name="IdDepense" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Rubrique" Type="varchar" MaxLength="30" />
+          <Property Name="NomDepense" Type="varchar" MaxLength="30" />
+          <Property Name="DateDepense" Type="date" />
+          <Property Name="MontantDepense" Type="float" />
+        </EntityType>
+        <EntityType Name="Logement">
+          <Key>
+            <PropertyRef Name="NumLogement" />
+          </Key>
+          <Property Name="NumLogement" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Paiement">
+          <Key>
+            <PropertyRef Name="IdP" />
+          </Key>
+          <Property Name="IdP" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CinCop" Type="int" />
+          <Property Name="NumLogement" Type="int" />
+          <Property Name="NomPayeur" Type="varchar" MaxLength="30" />
+          <Property Name="Datepaiement" Type="date" />
+          <Property Name="MontatP" Type="float" />
+          <Property Name="NbrMois" Type="int" />
+        </EntityType>
+        <EntityType Name="Rubrique">
+          <Key>
+            <PropertyRef Name="NomRubrique" />
+          </Key>
+          <Property Name="NomRubrique" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK__Coproprie__NumLo__182C9B23">
+          <End Role="Logement" Type="Self.Logement" Multiplicity="0..1" />
+          <End Role="Coproprietaire" Type="Self.Coproprietaire" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Logement">
+              <PropertyRef Name="NumLogement" />
+            </Principal>
+            <Dependent Role="Coproprietaire">
+              <PropertyRef Name="NumLogement" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Depense__Rubriqu__1273C1CD">
+          <End Role="Rubrique" Type="Self.Rubrique" Multiplicity="0..1" />
+          <End Role="Depense" Type="Self.Depense" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rubrique">
+              <PropertyRef Name="NomRubrique" />
+            </Principal>
+            <Dependent Role="Depense">
+              <PropertyRef Name="Rubrique" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Paiement__CinCop__1BFD2C07">
+          <End Role="Coproprietaire" Type="Self.Coproprietaire" Multiplicity="0..1" />
+          <End Role="Paiement" Type="Self.Paiement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Coproprietaire">
+              <PropertyRef Name="CinCop" />
+            </Principal>
+            <Dependent Role="Paiement">
+              <PropertyRef Name="CinCop" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Paiement__NumLog__1CF15040">
+          <End Role="Logement" Type="Self.Logement" Multiplicity="0..1" />
+          <End Role="Paiement" Type="Self.Paiement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Logement">
+              <PropertyRef Name="NumLogement" />
+            </Principal>
+            <Dependent Role="Paiement">
+              <PropertyRef Name="NumLogement" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB_SyndicModelStoreContainer">
+          <EntitySet Name="Coproprietaire" EntityType="Self.Coproprietaire" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Depense" EntityType="Self.Depense" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Logement" EntityType="Self.Logement" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Paiement" EntityType="Self.Paiement" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rubrique" EntityType="Self.Rubrique" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Coproprie__NumLo__182C9B23" Association="Self.FK__Coproprie__NumLo__182C9B23">
+            <End Role="Logement" EntitySet="Logement" />
+            <End Role="Coproprietaire" EntitySet="Coproprietaire" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Depense__Rubriqu__1273C1CD" Association="Self.FK__Depense__Rubriqu__1273C1CD">
+            <End Role="Rubrique" EntitySet="Rubrique" />
+            <End Role="Depense" EntitySet="Depense" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Paiement__CinCop__1BFD2C07" Association="Self.FK__Paiement__CinCop__1BFD2C07">
+            <End Role="Coproprietaire" EntitySet="Coproprietaire" />
+            <End Role="Paiement" EntitySet="Paiement" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Paiement__NumLog__1CF15040" Association="Self.FK__Paiement__NumLog__1CF15040">
+            <End Role="Logement" EntitySet="Logement" />
+            <End Role="Paiement" EntitySet="Paiement" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DB_SyndicModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Coproprietaire">
+          <Key>
+            <PropertyRef Name="CinCop" />
+          </Key>
+          <Property Name="CinCop" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NomCop" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PrenomCop" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Tel" Type="Int32" />
+          <Property Name="NumLogement" Type="Int32" />
+          <NavigationProperty Name="Logement" Relationship="Self.FK__Coproprie__NumLo__182C9B23" FromRole="Coproprietaire" ToRole="Logement" />
+          <NavigationProperty Name="Paiements" Relationship="Self.FK__Paiement__CinCop__1BFD2C07" FromRole="Coproprietaire" ToRole="Paiement" />
+        </EntityType>
+        <EntityType Name="Depense">
+          <Key>
+            <PropertyRef Name="IdDepense" />
+          </Key>
+          <Property Name="IdDepense" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Rubrique" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="NomDepense" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="DateDepense" Type="DateTime" Precision="0" />
+          <Property Name="MontantDepense" Type="Double" />
+          <NavigationProperty Name="Rubrique1" Relationship="Self.FK__Depense__Rubriqu__1273C1CD" FromRole="Depense" ToRole="Rubrique" />
+        </EntityType>
+        <EntityType Name="Logement">
+          <Key>
+            <PropertyRef Name="NumLogement" />
+          </Key>
+          <Property Name="NumLogement" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Coproprietaires" Relationship="Self.FK__Coproprie__NumLo__182C9B23" FromRole="Logement" ToRole="Coproprietaire" />
+          <NavigationProperty Name="Paiements" Relationship="Self.FK__Paiement__NumLog__1CF15040" FromRole="Logement" ToRole="Paiement" />
+        </EntityType>
+        <EntityType Name="Paiement">
+          <Key>
+            <PropertyRef Name="IdP" />
+          </Key>
+          <Property Name="IdP" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CinCop" Type="Int32" />
+          <Property Name="NumLogement" Type="Int32" />
+          <Property Name="NomPayeur" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Datepaiement" Type="DateTime" Precision="0" />
+          <Property Name="MontatP" Type="Double" />
+          <Property Name="NbrMois" Type="Int32" />
+          <NavigationProperty Name="Coproprietaire" Relationship="Self.FK__Paiement__CinCop__1BFD2C07" FromRole="Paiement" ToRole="Coproprietaire" />
+          <NavigationProperty Name="Logement" Relationship="Self.FK__Paiement__NumLog__1CF15040" FromRole="Paiement" ToRole="Logement" />
+        </EntityType>
+        <EntityType Name="Rubrique">
+          <Key>
+            <PropertyRef Name="NomRubrique" />
+          </Key>
+          <Property Name="NomRubrique" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Depenses" Relationship="Self.FK__Depense__Rubriqu__1273C1CD" FromRole="Rubrique" ToRole="Depense" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK__Coproprie__NumLo__182C9B23">
+          <End Role="Logement" Type="Self.Logement" Multiplicity="0..1" />
+          <End Role="Coproprietaire" Type="Self.Coproprietaire" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Logement">
+              <PropertyRef Name="NumLogement" />
+            </Principal>
+            <Dependent Role="Coproprietaire">
+              <PropertyRef Name="NumLogement" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Paiement__CinCop__1BFD2C07">
+          <End Role="Coproprietaire" Type="Self.Coproprietaire" Multiplicity="0..1" />
+          <End Role="Paiement" Type="Self.Paiement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Coproprietaire">
+              <PropertyRef Name="CinCop" />
+            </Principal>
+            <Dependent Role="Paiement">
+              <PropertyRef Name="CinCop" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Depense__Rubriqu__1273C1CD">
+          <End Role="Rubrique" Type="Self.Rubrique" Multiplicity="0..1" />
+          <End Role="Depense" Type="Self.Depense" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rubrique">
+              <PropertyRef Name="NomRubrique" />
+            </Principal>
+            <Dependent Role="Depense">
+              <PropertyRef Name="Rubrique" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Paiement__NumLog__1CF15040">
+          <End Role="Logement" Type="Self.Logement" Multiplicity="0..1" />
+          <End Role="Paiement" Type="Self.Paiement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Logement">
+              <PropertyRef Name="NumLogement" />
+            </Principal>
+            <Dependent Role="Paiement">
+              <PropertyRef Name="NumLogement" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB_SyndicEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Coproprietaires" EntityType="Self.Coproprietaire" />
+          <EntitySet Name="Depenses" EntityType="Self.Depense" />
+          <EntitySet Name="Logements" EntityType="Self.Logement" />
+          <EntitySet Name="Paiements" EntityType="Self.Paiement" />
+          <EntitySet Name="Rubriques" EntityType="Self.Rubrique" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <AssociationSet Name="FK__Coproprie__NumLo__182C9B23" Association="Self.FK__Coproprie__NumLo__182C9B23">
+            <End Role="Logement" EntitySet="Logements" />
+            <End Role="Coproprietaire" EntitySet="Coproprietaires" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Paiement__CinCop__1BFD2C07" Association="Self.FK__Paiement__CinCop__1BFD2C07">
+            <End Role="Coproprietaire" EntitySet="Coproprietaires" />
+            <End Role="Paiement" EntitySet="Paiements" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Depense__Rubriqu__1273C1CD" Association="Self.FK__Depense__Rubriqu__1273C1CD">
+            <End Role="Rubrique" EntitySet="Rubriques" />
+            <End Role="Depense" EntitySet="Depenses" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Paiement__NumLog__1CF15040" Association="Self.FK__Paiement__NumLog__1CF15040">
+            <End Role="Logement" EntitySet="Logements" />
+            <End Role="Paiement" EntitySet="Paiements" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DB_SyndicModelStoreContainer" CdmEntityContainer="DB_SyndicEntities1">
+          <EntitySetMapping Name="Coproprietaires">
+            <EntityTypeMapping TypeName="DB_SyndicModel.Coproprietaire">
+              <MappingFragment StoreEntitySet="Coproprietaire">
+                <ScalarProperty Name="CinCop" ColumnName="CinCop" />
+                <ScalarProperty Name="NomCop" ColumnName="NomCop" />
+                <ScalarProperty Name="PrenomCop" ColumnName="PrenomCop" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Tel" ColumnName="Tel" />
+                <ScalarProperty Name="NumLogement" ColumnName="NumLogement" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Depenses">
+            <EntityTypeMapping TypeName="DB_SyndicModel.Depense">
+              <MappingFragment StoreEntitySet="Depense">
+                <ScalarProperty Name="IdDepense" ColumnName="IdDepense" />
+                <ScalarProperty Name="Rubrique" ColumnName="Rubrique" />
+                <ScalarProperty Name="NomDepense" ColumnName="NomDepense" />
+                <ScalarProperty Name="DateDepense" ColumnName="DateDepense" />
+                <ScalarProperty Name="MontantDepense" ColumnName="MontantDepense" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Logements">
+            <EntityTypeMapping TypeName="DB_SyndicModel.Logement">
+              <MappingFragment StoreEntitySet="Logement">
+                <ScalarProperty Name="NumLogement" ColumnName="NumLogement" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Paiements">
+            <EntityTypeMapping TypeName="DB_SyndicModel.Paiement">
+              <MappingFragment StoreEntitySet="Paiement">
+                <ScalarProperty Name="IdP" ColumnName="IdP" />
+                <ScalarProperty Name="CinCop" ColumnName="CinCop" />
+                <ScalarProperty Name="NumLogement" ColumnName="NumLogement" />
+                <ScalarProperty Name="NomPayeur" ColumnName="NomPayeur" />
+                <ScalarProperty Name="Datepaiement" ColumnName="Datepaiement" />
+                <ScalarProperty Name="MontatP" ColumnName="MontatP" />
+                <ScalarProperty Name="NbrMois" ColumnName="NbrMois" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rubriques">
+            <EntityTypeMapping TypeName="DB_SyndicModel.Rubrique">
+              <MappingFragment StoreEntitySet="Rubrique">
+                <ScalarProperty Name="NomRubrique" ColumnName="NomRubrique" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="DB_SyndicModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
